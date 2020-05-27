@@ -1,0 +1,10 @@
+#Q1='''SELECT Movie.id,fname FROM Movie,Director,MovieDirector 
+#        WHERE Movie.id=mid AND Director.id=did AND 
+#        EXISTS(SELECT year FROM Movie WHERE Movie.year>2000) 
+#        AND NOT EXISTS(SELECT year FROM Movie WHERE Movie.year=2000) ORDER BY id ASC;'''
+
+#Q1="SELECT Movie.id,fname FROM Movie,Director,MovieDirector WHERE Movie.id=mid AND Director.id=did AND EXISTS(SELECT year FROM Movie WHERE Movie.year>2000) AND NOT EXISTS(SELECT year FROM Movie WHERE Movie.year=2000) ORDER BY id;"
+
+Q1="SELECT d.id,d.fname FROM Director As d WHERE EXISTS (SELECT m.id FROM Movie as m INNER JOIN MovieDirector as md ON m.id=md.mid WHERE d.id=md.did AND m.year>2000) AND NOT EXISTS(SELECT m.id FROM Movie as m INNER JOIN MovieDirector as md ON m.id=md.mid WHERE d.id=md.did AND m.year<2000) ORDER BY id ASC;"
+Q2="SELECT fname,(SELECT Movie.name FROM Movie,Director,MovieDirector WHERE Movie.id=mid AND Director.id=did AND Director.id=d.id ORDER BY rank DESC) FROM Director AS d LIMIT 100;"
+Q3="SELECT * FROM Actor AS a WHERE NOT EXISTS(SELECT m.id FROM Movie AS m INNER JOIN Cast as c ON m.id=c.mid WHERE a.id=c.pid AND m.year BETWEEN 1990 AND 2000) ORDER BY id DESC LIMIT 100;"
