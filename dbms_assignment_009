@@ -1,0 +1,19 @@
+Q1="SELECT AVG(age) FROM Player;"
+Q2="SELECT match_no,play_date FROM Match WHERE audience>50000 ORDER BY match_no ASC;"
+Q3="SELECT team_id,count(win_lose) as win from MatchTeamDetails group by team_id,win_lose having win_lose='W' order by win desc,team_id asc;"
+Q4="SELECT match_no,play_date FROM Match WHERE stop1_sec > (SELECT AVG(stop1_sec) FROM Match) ORDER BY match_no DESC;"
+Q5="SELECT match_no,Team.name,Player.name FROM Team,Player,MatchCaptain WHERE Player.player_id=MatchCaptain.captain AND Team.team_id=Player.team_id ORDER BY match_no ASC,Team.name ASC;"
+Q6="SELECT match_no,Player.name,jersey_no FROM Match,Player WHERE Player.player_id=Match.player_of_match ORDER BY match_no ASC;"
+Q7="SELECT Team.name,(SELECT AVG(age) FROM Player WHERE Team.team_id=Player.team_id)AS age_player FROM Team WHERE age_player>26 ORDER BY  Team.name ASC;"
+#Q8="SELECT name,jersey_no,age,(SELECT COUNT(goal_id) FROM GoalDetails GROUP BY player_id) AS goal FROM Player WHERE age<=27 ORDER BY goal DESC,name ASC;"
+
+Q8="SELECT name,jersey_no,age,COUNT(goal_id) AS goal FROM GoalDetails,Player WHERE age<=27 AND Player.player_id=GoalDetails.player_id GROUP BY GoalDetails.player_id ORDER BY goal DESC,name ASC;"
+Q9="SELECT team_id,COUNT(goal_id) * 100.0 / (SELECT COUNT(goal_id) FROM GoalDetails) FROM GoalDetails GROUP BY team_id;"
+Q10="SELECT AVG(c) FROM (SELECT COUNT(*) AS c FROM GoalDetails GROUP BY team_id);"
+#Q11="SELECT * FROM player WHERE NOT EXISTS(SELECT player_id,name,date_of_birth FROM player WHERE NOT EXISTS(order by player_id asc;)"
+
+Q11="SELECT player_id,name,date_of_birth FROM Player WHERE NOT EXISTS(SELECT GoalDetails.player_id FROM GoalDetails WHERE GoalDetails.player_id=Player.player_id GROUP BY player_id having COUNT(player_id)!=0) ORDER BY player_id ASC;"
+Q12="SELECT t.name,m.match_no,m.audience,m.audience-(select avg(m.audience)from match m inner join matchteamdetails md on md.match_no=m.match_no where t.team_id = md.team_id group by md.team_id) as difference from team t inner join matchteamdetails md on t.team_id=md.team_id inner join match m on m.match_no =md.match_no order by m.match_no asc;"
+#Q5="SELECT Match_no,Team.name,Player.name FROM Player INNER JOIN MatchCaptain ON MatchCaptain.captain=Player.player_id INNER JOIN Team ON Team.team_id=Player.team_id ORDER BY match_no ASC,Team.name ASC;"
+
+Q13 ="SELECT"
